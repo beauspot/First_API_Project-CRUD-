@@ -1,8 +1,15 @@
+const TaskModel = require("../models/task");
+
 const getAllTasks = (req, res) =>
   res.status(200).send("All Items from the controllers directory found!!!!");
 
-const createTask = (req, res) => {
-  res.status(200).json(req.body);
+const createTask = async (req, res) => {
+  try {
+    const createTask = await TaskModel.create(req.body);
+    res.status(201).json({ createTask });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 };
 
 const getSingleTasks = (req, res) => {
