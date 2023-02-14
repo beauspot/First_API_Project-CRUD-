@@ -34,15 +34,38 @@ const getSingleTasks = async (req, res) => {
 
 const updateSingletask = async (req, res) => {
   try {
-    
+    const { id: taskId } = req.params;
+    //res.status(200).json({ });
+    const updateData = await TaskModel.findOneAndUpdate(
+      { _id: taskId },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updateData)
+      return res
+        .status(404)
+        .json({ message: `No Task With The Id: ${taskId}` });
+    else res.status(200).json({ updateData });
   } catch (error) {
-    
+    res.status(500).json({ mesage: error });
   }
-  res.status(200).send("Task updated");
 };
 
-const deleteTask = (req, res) => {
-  res.status(200).send("Task deleted");
+const deleteTask = async (req, res) => {
+  try {
+    const { id: taskId } = req.params;
+    const Id_delete = await TaskModel.findOneAndDelete({ _id: taskId });
+    if (!Id_delete)
+      return res
+        .status(404)
+        .json({ message: "No Task With The Id: " + taskId });
+    else res.status(200).json({ Id_delete });
+  } catch (error) {
+    res.status(500).json({ errorMessage: error });
+  }
 };
 
 module.exports = {
