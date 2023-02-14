@@ -10,6 +10,7 @@ const app = express();
 // <====================Middleware =====================>
 app.use(logger("dev"));
 app.use(express.json());
+app.use(express.static("./public"));
 // <====================Middleware =====================>
 
 app.get("/", (req, res) => {
@@ -28,9 +29,11 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-   await connectDB(process.env.MONGO_URI);
+    await connectDB(process.env.MONGO_URI);
     app.listen(PORT, () => {
-      console.log(`Server connected to the DB & Listening on localhost:${PORT}`);
+      console.log(
+        `Server connected to the DB & Listening on localhost:${PORT}`
+      );
     });
   } catch (error) {
     console.error(error);
