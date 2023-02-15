@@ -3,7 +3,14 @@ const TaskModel = require("../models/task");
 const getAllTasks = async (req, res) => {
   try {
     const getTasks = await TaskModel.find({});
-    res.status(200).json({ getTasks });
+    // res.status(200).json({ getTasks });
+    // res.status(200).json({ getTasks, amount: getTasks.length });
+    res
+      .status(200)
+      .json({
+        status: "Successful",
+        data: { getTasks, nbHits: getTasks.length },
+      });
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -20,12 +27,12 @@ const createTask = async (req, res) => {
 
 const getSingleTasks = async (req, res) => {
   try {
-    const { id: taskId } = req.params;
-    const findTasksId = await TaskModel.findOne({ _id: taskId });
+    const { id: taskID } = req.params;
+    const findTasksId = await TaskModel.findOne({ _id: taskID });
     if (!findTasksId)
       return res
         .status(404)
-        .json({ message: "No Task With The Id: " + taskId });
+        .json({ message: "No Task With The Id: " + taskID });
     else res.status(200).json({ findTasksId });
   } catch (error) {
     res.status(500).json({ message: error });
