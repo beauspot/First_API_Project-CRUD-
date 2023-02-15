@@ -12,7 +12,6 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static("./public"));
-app.use("*", _404_Error_Middleware.get404Response);
 // <====================Middleware =====================>
 
 app.get("/", (req, res) => {
@@ -20,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/tasks", TaskRoutes);
+app.use("*", _404_Error_Middleware.get404Response);
 
 // app.get("/api/v1/tasks")   - get all tasks
 // app.post("/api/v1/tasks") - create a new task
