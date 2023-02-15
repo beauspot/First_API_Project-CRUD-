@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const connectDB = require("./db/connect");
 require("dotenv").config();
+const _404_Error_Middleware = require("./middleware/_404Error");
 
 const TaskRoutes = require("./routes/taskRoutes");
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static("./public"));
+app.use("*", _404_Error_Middleware.get404Response);
 // <====================Middleware =====================>
 
 app.get("/", (req, res) => {
