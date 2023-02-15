@@ -1,4 +1,5 @@
 const TaskModel = require("../models/task");
+const asyncAwaitWrapper = require("../middleware/async_await");
 
 const getAllTasks = async (req, res) => {
   try {
