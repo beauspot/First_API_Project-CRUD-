@@ -3,6 +3,7 @@ const logger = require("morgan");
 const connectDB = require("./db/connect");
 require("dotenv").config();
 const _404_Error_Middleware = require("./middleware/_404Error");
+const errMiddlewareHandler = require("./middleware/error_handler");
 
 const TaskRoutes = require("./routes/taskRoutes");
 
@@ -20,6 +21,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/tasks", TaskRoutes);
 app.use("*", _404_Error_Middleware.get404Response);
+// define error-handling middleware last, after other app.use() and routes calls eg ln 25
+app.use(errMiddlewareHandler.errHandler);
 
 // app.get("/api/v1/tasks")   - get all tasks
 // app.post("/api/v1/tasks") - create a new task
