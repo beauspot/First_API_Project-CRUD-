@@ -1,10 +1,10 @@
 const express = require("express");
 const logger = require("morgan");
 const connectDB = require("./db/connect");
-require("dotenv").config();
 const _404_Error_Middleware = require("./middleware/_404Error");
 const errMiddlewareHandler = require("./middleware/error_handler");
 
+require("dotenv").config();
 const TaskRoutes = require("./routes/taskRoutes");
 
 const app = express();
